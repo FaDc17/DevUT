@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DevUT · Crear cuenta</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<main class="auth-page">
+  <div class="auth-decoration auth-decoration-one"></div>
+  <div class="auth-decoration auth-decoration-two"></div>
+  <div class="auth-card">
+    <div class="auth-logo">
+      <span class="logo-shell"><img th:src="@{/images/devut-wordmark.png}" alt="DevUT" class="logo"></span>
+    </div>
+    <div class="auth-heading">
+      <span>ÚNETE A DEVUT</span>
+      <h1>Crea tu cuenta</h1>
+      <p>Empieza a descubrir eventos hechos para ti.</p>
+    </div>
+
+    <form th:action="@{/register}" method="post" class="auth-form">
+      <div th:if="${error}" class="form-error" role="alert" th:text="${error}"></div>
+      <div class="two-fields">
+        <label>Nombre
+          <input required name="firstName" placeholder="Tu nombre">
+        </label>
+        <label>Apellido
+          <input required name="lastName" placeholder="Tu apellido">
+        </label>
+      </div>
+      <label><span>Correo electrónico</span>
+        <input required type="email" name="username" placeholder="Correo electrónico">
+      </label>
+      <label>Contraseña
+        <div class="password-input">
+          <input required name="password" id="password" type="password" placeholder="••••••••">
+          <button type="button" id="togglePassword" aria-label="Mostrar contraseña">◉</button>
+        </div>
+      </label>
+      <label>Repetir contraseña
+        <input required name="repeatedPassword" type="password" placeholder="••••••••">
+      </label>
+      <div class="password-rules">
+        <strong>Tu contraseña debe tener:</strong>
+        <span>✓ Mínimo 8 caracteres</span>
+        <span>✓ Una mayúscula</span>
+        <span>✓ Un número</span>
+        <span>✓ Un símbolo</span>
+      </div>
+      <button class="btn btn-primary btn-wide" type="submit">Crear cuenta <span>→</span></button>
+    </form>
+
+    <p class="auth-switch"><span>¿Ya tienes una cuenta?</span>
+      <a th:href="@{/login}" class="auth-switch-link">Inicia sesión</a>
+    </p>
+  </div>
+</main>
+<script th:src="@{/js/app.js}"></script>
+</body>
+</html>

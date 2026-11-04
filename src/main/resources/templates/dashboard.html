@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>DevUT · Mi perfil</title><link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body th:attr="data-display-name=${session.displayName ?: 'Usuario'}">
+<header th:replace="~{fragments :: navbar('dashboard')}"></header>
+<main class="section-shell page-main dashboard">
+  <section class="dashboard-hello">
+    <div>
+      <span class="avatar avatar-lg" aria-hidden="true"></span>
+      <div>
+        <span>MI PERFIL</span>
+        <h1>Hola, <strong th:text="${displayName}">Usuario</strong></h1>
+        <p>Estas son tus novedades de la semana.</p>
+      </div>
+    </div>
+    <button class="btn btn-secondary" id="openProfileEdit" type="button">✎ Editar perfil</button>
+  </section>
+  <div class="dashboard-layout">
+    <div class="dashboard-primary">
+      <section class="dashboard-section">
+        <div class="section-heading compact">
+          <div><span class="section-kicker">PERSONALIZADO PARA TI</span><h2>Eventos para ti</h2></div>
+          <a class="text-link" th:href="@{/events}">Ver todos →</a>
+        </div>
+        <div class="dashboard-event-grid">
+          <article class="event-card" th:each="event, i : ${events}" th:if="${i.index < 2}">
+            <div class="image-placeholder"><span class="placeholder-glow"></span></div>
+            <div class="event-card-body">
+              <span class="tag" th:text="${event.category}"></span><h3 th:text="${event.title}"></h3>
+              <div class="event-meta" th:text="${event.date + ' · ' + event.time}"></div>
+              <p th:text="${event.description}"></p>
+              <div class="card-actions"><a class="btn btn-primary" th:href="@{/event/{id}(id=${event.id})}">Registrarme →</a><button class="btn btn-whatsapp">◉</button></div>
+            </div>
+          </article>
+        </div>
+      </section>
+      <section class="dashboard-section">
+        <div class="section-heading compact"><div><span class="section-kicker">TU AGENDA</span><h2>Mis eventos</h2></div></div>
+        <div class="registered-event">
+          <div class="date-block"><strong>24</strong><span>ABR</span></div>
+          <div><span class="tag">Datos e IA</span><h3>Data &amp; AI Lima Meetup</h3><p>◷ 7:00 p. m. · ⌖ UTEC, Barranco</p></div>
+          <a class="btn btn-secondary" th:href="@{/event/1}">Ver detalle</a>
+        </div>
+      </section>
+      <section class="dashboard-section">
+        <div class="section-heading compact"><div><span class="section-kicker">TU VOZ</span><h2>Mis publicaciones</h2></div></div>
+        <div class="own-posts-grid">
+          <article class="post-card own-post-card" th:each="postText : ${ {'Preparándome para aprender sobre IA aplicada y conocer a más personas de la comunidad de datos.', 'Compartiendo algunos apuntes y recursos que quiero conversar en el próximo meetup de tecnología.'} }">
+            <div class="post-author">
+              <span class="avatar avatar-md" aria-hidden="true"></span>
+              <div><strong th:text="${displayName}">Usuario</strong><span>Plantilla de publicación</span></div><span class="template-label">PLANTILLA</span>
+            </div>
+            <p th:text="${postText}"></p>
+            <div class="image-placeholder"><span class="placeholder-glow"></span><span>Imagen de mi publicación</span></div>
+          </article>
+        </div>
+      </section>
+    </div>
+    <aside class="dashboard-sidebar">
+      <section class="side-card">
+        <div class="side-title"><h3>Mis categorías</h3><button>Editar</button></div>
+        <div class="chosen-categories"><div><span>⌁</span>Ingeniería de software</div><div><span>▦</span>Datos e IA</div><div><span>☁</span>Nube y DevOps</div></div>
+      </section>
+      <section class="side-card community-side"><span>◉</span><h3>Comunidad DevUT</h3><p>Conecta con personas que irán a tus próximos eventos.</p><button class="btn btn-whatsapp btn-wide">◉ Ir a la comunidad</button></section>
+    </aside>
+  </div>
+</main>
+
+<div class="modal-backdrop" id="profileEditModal" hidden>
+  <form class="publish-modal profile-edit-modal" th:action="@{/profile}" method="post">
+    <div class="publish-title"><h2>Editar perfil</h2><button type="button" id="closeProfileEdit" aria-label="Cerrar">×</button></div>
+    <div class="profile-edit-fields">
+      <label>Nombre<input required name="firstName" th:value="${firstName}" autocomplete="given-name"></label>
+      <label>Apellido<input required name="lastName" th:value="${lastName}" autocomplete="family-name"></label>
+      <label>Correo electrónico<input required type="email" name="email" th:value="${userEmail}" autocomplete="email"></label>
+    </div>
+    <div class="publish-actions">
+      <button class="btn btn-secondary" type="button" id="cancelProfileEdit">Cancelar</button>
+      <button class="btn btn-primary" type="submit">Guardar cambios →</button>
+    </div>
+  </form>
+</div>
+
+<footer th:replace="~{fragments :: footer}"></footer>
+<script th:src="@{/js/app.js}"></script>
+</body>
+</html>

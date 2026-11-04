@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>DevUT · Experiencias</title><link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body th:attr="data-display-name=${session.displayName ?: 'Usuario'}">
+<header th:replace="~{fragments :: navbar('experiences')}"></header>
+<main class="section-shell page-main feed-main">
+  <div class="page-intro"><span class="section-kicker">COMUNIDAD DEVUT</span><h1>Experiencias que <span>conectan</span></h1><p>Ideas, aprendizajes y momentos compartidos por personas como tú.</p></div>
+  <div class="feed-layout">
+    <div class="feed">
+      <button class="composer" id="openPublish" type="button"><span class="avatar avatar-md" aria-hidden="true"></span><span>¿Qué estás pensando?</span><span class="composer-camera">▣</span></button>
+      <div id="newPosts"></div>
+      <article class="post-card" th:each="sample : ${ {'Una gran noche compartiendo ideas sobre tecnología y conociendo a personas increíbles de la comunidad.', 'Me llevo muchas ideas para aplicar en mi equipo. Gracias a quienes compartieron sus experiencias hoy.'} }">
+        <div class="post-author"><span class="avatar avatar-md" aria-hidden="true"></span><div><strong>Mariana Torres</strong><span>Plantilla de publicación · Hace 2 h</span></div><span class="template-label">PLANTILLA</span></div>
+        <p th:text="${sample}"></p><div class="image-placeholder"><span class="placeholder-glow"></span><span>Imagen de la experiencia</span></div>
+      </article>
+    </div>
+    <aside class="feed-sidebar">
+      <div class="side-card"><h3>Tu comunidad</h3><p>Personas que comparten tus intereses están conversando ahora.</p><div class="avatar-stack"><span class="avatar avatar-md" aria-hidden="true"></span><span class="avatar avatar-md" aria-hidden="true"></span><span class="avatar avatar-md" aria-hidden="true"></span><span>+148</span></div><button class="btn btn-whatsapp btn-wide">◉ Unirme al grupo</button></div>
+      <div class="side-card rules"><h3>Este espacio de todos</h3><p>Sé respetuoso, comparte contenido útil y ayúdanos a crear una mejor comunidad.</p></div>
+    </aside>
+  </div>
+</main>
+<div class="modal-backdrop" id="publishModal" hidden>
+  <div class="publish-modal">
+    <div class="publish-title"><h2>Crear publicación</h2><button id="closePublish" type="button" aria-label="Cerrar">×</button></div>
+    <div class="post-author"><span class="avatar avatar-md" aria-hidden="true"></span><div><strong th:text="${session.displayName ?: 'Usuario'}">Usuario</strong><span>Compartir con la comunidad</span></div></div>
+    <textarea id="publishText" autofocus placeholder="¿Qué estás pensando?"></textarea>
+    <div class="publish-actions"><button class="btn btn-secondary" type="button">▣ Imagen</button><button class="btn btn-primary" id="publishButton" type="button" disabled>Publicar →</button></div>
+  </div>
+</div>
+<footer th:replace="~{fragments :: footer}"></footer>
+<script th:src="@{/js/app.js}"></script>
+</body>
+</html>
